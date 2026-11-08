@@ -1,53 +1,43 @@
 <?php
 /**
- * Dynamic Web Page Starter - HTML5, CSS3 & PHP
+ * Dynamic Web Form Processor - PHP & HTML5
  * Author: Rami Izzeddin
  */
 
-$page_title = "Web Development Portfolio";
-$developer = "Rami Izzeddin";
+$message = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = htmlspecialchars(trim($_POST['username'] ?? ''));
+    if (!empty($username)) {
+        $message = "Welcome back, " . $username . "! Server processed your POST request successfully.";
+    } else {
+        $message = "Please enter a valid name.";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $page_title; ?></title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 40px;
-            text-align: center;
-        }
-        .container {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            max-width: 600px;
-            margin: auto;
-        }
-        h1 { color: #2c3e50; }
-        p { color: #555; }
-        .badge {
-            display: inline-block;
-            background: #777BB4;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-    </style>
+    <title>Web Dev Portfolio - PHP & HTML5</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1><?php echo $page_title; ?></h1>
-        <p>Developed by <strong><?php echo $developer; ?></strong></p>
-        <div class="badge">Server Status: Online (PHP <?php echo phpversion(); ?>)</div>
+    <div class="card">
+        <h1>PHP & HTML5 Form Handler</h1>
+        <p>Demonstrating secure input sanitization and server-side request processing.</p>
+        
+        <?php if (!empty($message)): ?>
+            <p style="color: #27ae60; font-weight: bold;"><?php echo $message; ?></p>
+        <?php endif; ?>
+
+        <form method="POST" action="">
+            <label for="username">Your Name:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your name..." required>
+            <button type="submit">Submit Request</button>
+        </form>
+
+        <div class="badge">PHP Server Running (v<?php echo phpversion(); ?>)</div>
     </div>
 </body>
 </html>
